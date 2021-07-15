@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 
 <%
@@ -17,36 +16,7 @@ String dId = request.getParameter("dId");
 
 <body>
 	<div id="wrap">
-
-		<div id="header" class="clearfix">
-			<h1>
-				<a href="/mysite/main">MySite</a>
-			</h1>
-
-			<!-- 
-			<ul>
-				<li>황일영 님 안녕하세요^^</li>
-				<li><a href="" class="btn_s">로그아웃</a></li>
-				<li><a href="" class="btn_s">회원정보수정</a></li>
-			</ul>
-			-->
-			<ul>
-				<li><a href="/mysite/user?action=loginForm" class="btn_s">로그인</a></li>
-				<li><a href="/mysite/user?action=jform" class="btn_s">회원가입</a></li>
-			</ul>
-
-		</div>
-		<!-- //header -->
-
-		<div id="nav">
-			<ul class="clearfix">
-				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
-				<li><a href="">갤러리</a></li>
-				<li><a href="/mysite/guest">방명록</a></li>
-			</ul>
-		</div>
-		<!-- //nav -->
+		<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
 
 		<div id="container" class="clearfix">
 			<div id="aside">
@@ -83,19 +53,16 @@ String dId = request.getParameter("dId");
 							</colgroup>
 							<tr>
 								<td>비밀번호</td>
-								<td>
-									<input type="password" name="dPw" value="">
-								</td>
+								<td><input type="password" name="dPw" value=""></td>
 								<td class="text-left">
 									<button type="submit">삭제</button>
 								</td>
-								<td>
-									<a href="/guestbook2/gbc">[메인으로 돌아가기]</a>
-								</td>
+								<td><a href="/guestbook2/gbc">[메인으로 돌아가기]</a></td>
 							</tr>
 						</table>
-						<input type="hidden" name="dId" value="<%=dId%>">
-						<input type="hidden" name="action" value="delete">
+						<input type="hidden" name="dId" value="<%=dId%>"> <input type="hidden" name="action"
+							value="delete"
+						>
 					</form>
 
 				</div>
@@ -106,7 +73,7 @@ String dId = request.getParameter("dId");
 		</div>
 		<!-- //container  -->
 
-		<div id="footer">Copyright ⓒ 2020 황일영. All right reserved</div>
+		<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
 		<!-- //footer -->
 
 	</div>

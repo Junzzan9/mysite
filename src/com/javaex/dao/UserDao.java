@@ -87,4 +87,66 @@ public class UserDao {
 		return count;
 	}
 
+	public UserVo getUser(String uId, String pw) {
+
+		getConnection();
+
+		UserVo uVo = new UserVo();
+
+		try {
+			String query = "";
+			query += " select no,name,id from users ";
+			query += " where id = ? and passward = ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, uId);
+			pstmt.setString(2, pw);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int no = rs.getInt("no");
+				String name = rs.getString("name");
+				String id = rs.getString("id");
+
+				uVo.setNo(no);
+				uVo.setName(name);
+				uVo.setuId(id);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+		close();
+		return uVo;
+	}
+
+	public int userModify(int no,String pw,String name,String gender) {
+
+		getConnection();
+
+		int count=-1;
+
+		try {
+			String query = "";
+			query += " update users set ";
+			query += " passward = ?, name = ?,gender = ? ";
+			query += " where no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, pw);
+			pstmt.setString(2, name);
+			pstmt.setString(3, gender);
+			pstmt.setInt(4, no);
+
+			count = pstmt.executeUpdate();
+
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+		close();
+		return count;
+	}
+
 }
