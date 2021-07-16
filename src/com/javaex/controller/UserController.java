@@ -26,6 +26,7 @@ public class UserController extends HttpServlet {
 		System.out.println("[UserController accessed]");
 
 		String action = request.getParameter("action");
+		HttpSession session = request.getSession();
 		System.out.println("current action=" + action);
 
 		if ("jform".equals(action)) { // 회원가입 폼
@@ -67,7 +68,6 @@ public class UserController extends HttpServlet {
 
 			if (uVo.getName() != null) {
 				// 로그인성공일때 세션에 저장
-				HttpSession session = request.getSession();
 				session.setAttribute("authUser", uVo);
 
 				WebUtil.redirect(request, response, "/mysite/main");
@@ -81,7 +81,6 @@ public class UserController extends HttpServlet {
 
 		else if ("logout".equals(action)) {
 			// 세션이 가지고있는 authUser값 삭제
-			HttpSession session = request.getSession();
 			session.removeAttribute("authUser");
 			session.invalidate(); // <-- authUser(세션) 메모리삭제
 
@@ -95,15 +94,15 @@ public class UserController extends HttpServlet {
 		}
 		
 		else if ("modify".equals(action)) {
-			HttpSession session = request.getSession();
 			UserVo uVo = (UserVo)session.getAttribute("authUser");
 			String pw = request.getParameter("pw");
 			String name = request.getParameter("name");
 			String gender = request.getParameter("gender");
-			
 			UserDao uDao = new UserDao();
 			
 			uDao.userModify(uVo.getNo(), pw, name, gender);
+			uVo.setName(name);
+
 			
 			WebUtil.redirect(request, response, "/mysite/main");
 			
