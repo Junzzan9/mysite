@@ -89,7 +89,17 @@ public class UserController extends HttpServlet {
 		}
 
 		else if ("modifyForm".equals(action)) {
-
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			int no = authUser.getNo();
+			
+			//로그인한 사용자 모든정보 DB에서 가져오기 위해 다오열기
+			UserDao uDao = new UserDao();
+			
+			//불러온 모든정보 userVo에 담기
+			UserVo uVo = uDao.getUser(no);
+			
+			request.setAttribute("uVo", uVo);
+			
 			WebUtil.forward(request, response, "/WEB-INF/views/user/modifyForm.jsp");
 		}
 		

@@ -121,11 +121,54 @@ public class UserDao {
 		return uVo;
 	}
 
-	public int userModify(int no,String pw,String name,String gender) {
+	public UserVo getUser(int no) {
+
+		UserVo uVo = null;
 
 		getConnection();
 
-		int count=-1;
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			String query = "";
+			query += " select no, id, passward, name, gender ";
+			query += " from users ";
+			query += " where no = ? ";
+
+			System.out.println(query);
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+
+			rs = pstmt.executeQuery();
+
+			// 4.결과처리
+			while (rs.next()) {
+				int uNo = rs.getInt("no");
+				String id = rs.getString("id");
+				String password = rs.getString("passward");
+				String name = rs.getString("name");
+				String gender = rs.getString("gender");
+
+				uVo = new UserVo(uNo, id, password, name, gender);
+
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+
+		return uVo;
+
+	}
+
+	public int userModify(int no, String pw, String name, String gender) {
+
+		getConnection();
+
+		int count = -1;
 
 		try {
 			String query = "";
@@ -140,7 +183,6 @@ public class UserDao {
 			pstmt.setInt(4, no);
 
 			count = pstmt.executeUpdate();
-
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
