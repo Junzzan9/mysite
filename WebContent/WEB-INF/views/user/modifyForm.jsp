@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.javaex.vo.UserVo"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
-
-<%
-UserVo uVo = (UserVo)request.getAttribute("uVo");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +16,7 @@ UserVo uVo = (UserVo)request.getAttribute("uVo");
 <body>
 	<div id="wrap">
 
-		<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
+		<c:import url = "/WEB-INF/views/includes/header.jsp"></c:import>
 
 		<div id="container" class="clearfix">
 			<div id="aside">
@@ -54,7 +51,7 @@ UserVo uVo = (UserVo)request.getAttribute("uVo");
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
-								<span class="text-large bold"><%=uVo.getuId() %></span>
+								<span class="text-large bold">${requestScope.uVo.uId }</span>
 							</div>
 	
 							<!-- 비밀번호 -->
@@ -86,7 +83,7 @@ UserVo uVo = (UserVo)request.getAttribute("uVo");
 								<button type="submit" id="btn-submit">회원정보수정</button>
 							</div>
 							<input type="hidden" name="action" value="modify">
-							<input type="hidden" name="no" value="<%=uVo.getNo() %>">
+							<input type="hidden" name="no" value="${requestScope.uVo.no }">
 						</form>
 					
 					

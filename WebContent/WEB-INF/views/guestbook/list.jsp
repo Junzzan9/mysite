@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ page import="java.util.List"%>
-<%@ page import="com.javaex.vo.GuestBookVo"%>
-
-<%
-List<GuestBookVo> gbList = (List<GuestBookVo>) request.getAttribute("gbList");
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +14,7 @@ List<GuestBookVo> gbList = (List<GuestBookVo>) request.getAttribute("gbList");
 
 <body>
 	<div id="wrap">
-		<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 
 		<div id="container" class="clearfix">
 			<div id="aside">
@@ -76,30 +71,26 @@ List<GuestBookVo> gbList = (List<GuestBookVo>) request.getAttribute("gbList");
 						<input type="hidden" name="action" value="add">
 
 					</form>
-					<%
-					for (int i = 0; i < gbList.size(); i++) {
-					%>
-					<table class="guestRead">
-						<colgroup>
-							<col style="width: 10%;">
-							<col style="width: 40%;">
-							<col style="width: 40%;">
-							<col style="width: 10%;">
-						</colgroup>
-						<tr>
-							<td><%=gbList.get(i).getNo()%></td>
-							<td><%=gbList.get(i).getName()%></td>
-							<td><%=gbList.get(i).getDate()%></td>
-							<td><a href="/mysite/guest?action=dform&dId=<%=gbList.get(i).getNo()%>">[삭제]</a></td>
-						</tr>
-						<tr>
-							<td colspan=4 class="text-left"><%=gbList.get(i).getContent()%></td>
-						</tr>
-					</table>
-					<!-- //guestRead -->
-					<%
-					}
-					%>
+					<c:forEach items="${gbList }" var="gVo">
+						<table class="guestRead">
+							<colgroup>
+								<col style="width: 10%;">
+								<col style="width: 40%;">
+								<col style="width: 40%;">
+								<col style="width: 10%;">
+							</colgroup>
+							<tr>
+								<td>${gVo.no }</td>
+								<td>${gVo.name }</td>
+								<td>${gVo.date }</td>
+								<td><a href="/mysite/guest?action=dform&dId=${gVo.no }">[삭제]</a></td>
+							</tr>
+							<tr>
+								<td colspan=4 class="text-left">${gVo.content }</td>
+							</tr>
+						</table>
+						<!-- //guestRead -->
+					</c:forEach>
 				</div>
 				<!-- //guestbook -->
 
@@ -108,7 +99,7 @@ List<GuestBookVo> gbList = (List<GuestBookVo>) request.getAttribute("gbList");
 		</div>
 		<!-- //container  -->
 
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		<!-- //footer -->
 	</div>
 	<!-- //wrap -->
