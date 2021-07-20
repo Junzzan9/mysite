@@ -47,7 +47,6 @@
 						<form action="/mysite/board" method="post">
 							<div class="form-group text-right">
 								<input type="text" name="keyword" value="">
-								<input type="hidden" name ="action" value ="search">
 								<button type="submit" id=btn_search>검색</button>
 							</div>
 						</form>

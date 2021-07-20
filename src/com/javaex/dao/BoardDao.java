@@ -78,7 +78,7 @@ public class BoardDao {
 		return count;
 	}
 
-	public List<BoardVo> getBoardList() {
+	public List<BoardVo> getBoardList(String keyword) {
 
 		getConnection();
 
@@ -94,9 +94,21 @@ public class BoardDao {
 			query += " to_char(bo.reg_date,'yy-mm-dd') as rdate ";
 			query += " from  users us ,  board bo ";
 			query += " where us.no = bo.user_no ";
-			query += " order by bo.no desc ";
 
-			pstmt = conn.prepareStatement(query);
+			if (keyword != "" || keyword == null) {
+				
+				
+				query += " and bo.title like ? ";
+				query += " order by bo.no desc ";
+				
+				pstmt = conn.prepareStatement(query);
+				
+				pstmt.setString(1, '%' + keyword + '%');
+			}
+			else {
+				query += " order by bo.no desc ";
+				pstmt = conn.prepareStatement(query);
+			}
 
 			rs = pstmt.executeQuery();
 
@@ -211,47 +223,6 @@ public class BoardDao {
 		return count;
 	}
 
-	public List<BoardVo> searchBoard(String keyword) {
-		getConnection();
-		List<BoardVo> bList = new ArrayList<BoardVo>();
-		try {
-			String query = "";
-			query += " select bo.no as no, ";
-			query += " bo.title as title, ";
-			query += " us.name as name, ";
-			query += " bo.user_no as uNo, ";
-			query += " bo.hit as hit, ";
-			query += " to_char(bo.reg_date,'yy-mm-dd') as rdate ";
-			query += " from  users us ,  board bo ";
-			query += " where us.no = bo.user_no ";
-			query += " and bo.title like ? ";
-			query += " order by bo.no desc ";
-
-			String word = "%" + keyword + "%";
-			pstmt = conn.prepareStatement(query);
-
-			pstmt.setString(1, word);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				int no = rs.getInt("no");
-				String title = rs.getString("title");
-				int hit = rs.getInt("hit");
-				String date = rs.getString("rdate");
-				int uNo = rs.getInt("uNo");
-				String name = rs.getString("name");
-
-				BoardVo bVo = new BoardVo(no, title, hit, date, uNo, name);
-				bList.add(bVo);
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-		close();
-		return bList;
-
-	}
+	
 
 }

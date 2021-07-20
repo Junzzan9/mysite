@@ -26,7 +26,7 @@ public class BoardController extends HttpServlet {
 		if ("list".equals(action) || null == action) {
 			System.out.println("board accessed");
 			BoardDao bDao = new BoardDao();
-			List<BoardVo> bList = bDao.getBoardList();
+			List<BoardVo> bList = bDao.getBoardList(request.getParameter("keyword"));
 
 			request.setAttribute("bList", bList);
 			// System.out.println(bList);
@@ -91,14 +91,6 @@ public class BoardController extends HttpServlet {
 			WebUtil.redirect(request, response, "/mysite/board");
 		}
 		
-		else if ("search".equals(action)) {
-			String key=request.getParameter("keyword");
-			BoardDao bDao = new BoardDao();
-			List<BoardVo> bList = bDao.searchBoard(key);
-			
-			request.setAttribute("bList", bList);
-			WebUtil.forward(request, response, "./WEB-INF/views/board/list.jsp");
-		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
