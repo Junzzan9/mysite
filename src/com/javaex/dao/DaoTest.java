@@ -11,6 +11,8 @@ public class DaoTest {
 		uDao.userInsert(uVo);
 		
 		
+	
+		
 	}
 
 }

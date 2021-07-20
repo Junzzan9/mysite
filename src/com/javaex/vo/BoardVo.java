@@ -8,8 +8,8 @@ public class BoardVo {
 	private String date;
 	private int uNo;
 	private String name;
-	
-	//게시판 list vo
+
+	// 게시판 list vo
 	public BoardVo(int no, String title, int hit, String date, int uNo, String name) {
 		super();
 		this.no = no;
@@ -21,7 +21,21 @@ public class BoardVo {
 	}
 	
 	
-	//게시판 read vo
+	
+	public BoardVo(int no, String title, String content, int hit, String date, int uNo, String name) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.content = content;
+		this.hit = hit;
+		this.date = date;
+		this.uNo = uNo;
+		this.name = name;
+	}
+
+
+
+	// 게시판 read vo
 	public BoardVo(String title, String content, int hit, String date, int uNo, String name) {
 		super();
 		this.title = title;
@@ -30,6 +44,24 @@ public class BoardVo {
 		this.date = date;
 		this.uNo = uNo;
 		this.name = name;
+	}
+	
+	// 게시판 modify vo
+	public BoardVo(String title, String content, int No) {
+		this.title = title;
+		this.content = content;
+		this.no = No;
+	
+	}
+	
+	
+
+
+	public BoardVo(String title, int uNo, String content) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.uNo = uNo;
 	}
 
 

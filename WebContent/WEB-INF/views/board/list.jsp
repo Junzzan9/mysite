@@ -21,7 +21,7 @@
 			<div id="aside">
 				<h2>게시판</h2>
 				<ul>
-					<li><a href="">일반게시판</a></li>
+					<li><a href="/mysite/board">일반게시판</a></li>
 					<li><a href="">댓글게시판</a></li>
 				</ul>
 			</div>
@@ -44,9 +44,10 @@
 
 				<div id="board">
 					<div id="list">
-						<form action="" method="">
+						<form action="/mysite/board" method="post">
 							<div class="form-group text-right">
-								<input type="text">
+								<input type="text" name="keyword" value="">
+								<input type="hidden" name ="action" value ="search">
 								<button type="submit" id=btn_search>검색</button>
 							</div>
 						</form>
@@ -65,12 +66,12 @@
 								<c:forEach items="${bList }" var="bVo">
 									<tr>
 										<td>${bVo.no }</td>
-										<td class="text-left"><a href="/mysite/board?action=read&no=${requestScope.bVo.no} ">${ requestScope.bVo.title }</a></td>
+										<td class="text-left"><a href="/mysite/board?action=read&no=${bVo.no} ">${ bVo.title }</a></td>
 										<td>${bVo.name }</td>
 										<td>${bVo.hit }</td>
 										<td>${bVo.date}</td>
-										<td><c:if test="${requestScope.bVo.uNo == sessionScope.authUser.no }">
-												<a href="/mysite/board?action=delete&no=${requestScope.bVo.no }">[삭제]</a>
+										<td><c:if test="${bVo.uNo == authUser.no }">
+												<a href="/mysite/board?action=delete&no=${bVo.no }">[삭제]</a>
 											</c:if></td>
 									</tr>
 								</c:forEach>
