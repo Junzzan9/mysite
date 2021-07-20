@@ -29,11 +29,6 @@ public class BoardController extends HttpServlet {
 			BoardDao bDao = new BoardDao();
 			List<BoardVo> bList = bDao.getBoardList(keyword);
 			
-			if(keyword != null) {
-				bList = bDao.getBoardList(keyword);
-			} else {
-				bList = bDao.getBoardList();
-			}
 			
 			request.setAttribute("bList", bList);
 			// System.out.println(bList);

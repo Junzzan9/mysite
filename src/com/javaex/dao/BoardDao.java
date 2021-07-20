@@ -77,11 +77,11 @@ public class BoardDao {
 		close();
 		return count;
 	}
-	
+
 	public List<BoardVo> getBoardList() {
 		return getBoardList("");
 	}
-	
+
 	public List<BoardVo> getBoardList(String keyword) {
 
 		getConnection();
@@ -99,19 +99,17 @@ public class BoardDao {
 			query += " from  users us ,  board bo ";
 			query += " where us.no = bo.user_no ";
 
-			if (keyword != "" || keyword == null) {
-				
-				
+			if (keyword.equals("") || keyword == null) {
+
+				query += " order by bo.no desc ";
+				pstmt = conn.prepareStatement(query);
+			} else {
 				query += " and bo.title like ? ";
 				query += " order by bo.no desc ";
-				
+
 				pstmt = conn.prepareStatement(query);
-				
+
 				pstmt.setString(1, '%' + keyword + '%');
-			}
-			else {
-				query += " order by bo.no desc ";
-				pstmt = conn.prepareStatement(query);
 			}
 
 			rs = pstmt.executeQuery();
@@ -226,7 +224,5 @@ public class BoardDao {
 		close();
 		return count;
 	}
-
-	
 
 }
