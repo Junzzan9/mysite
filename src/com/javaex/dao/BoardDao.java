@@ -77,7 +77,11 @@ public class BoardDao {
 		close();
 		return count;
 	}
-
+	
+	public List<BoardVo> getBoardList() {
+		return getBoardList("");
+	}
+	
 	public List<BoardVo> getBoardList(String keyword) {
 
 		getConnection();
