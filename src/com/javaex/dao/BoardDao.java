@@ -225,4 +225,27 @@ public class BoardDao {
 		return count;
 	}
 
+	public int boardDelete(int no) {
+		int count = 0;
+		getConnection();
+
+		try {
+			String query = "";
+			query += " delete from board ";
+			query += " where no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setInt(1, no);
+
+			count = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+		return count;
+	}
+
 }

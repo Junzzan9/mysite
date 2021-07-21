@@ -23,18 +23,18 @@ public class BoardController extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
-		String keyword =request.getParameter("keyword");
+		String keyword = request.getParameter("keyword");
 		if ("list".equals(action) || null == action) {
 			System.out.println("board accessed");
 			BoardDao bDao = new BoardDao();
-			List<BoardVo> bList ;
-			
-			if(keyword != null) {
+			List<BoardVo> bList;
+
+			if (keyword != null) {
 				bList = bDao.getBoardList(keyword);
 			} else {
 				bList = bDao.getBoardList();
 			}
-			
+
 			request.setAttribute("bList", bList);
 			// System.out.println(bList);
 			WebUtil.forward(request, response, "/WEB-INF/views/board/list.jsp");
@@ -47,19 +47,19 @@ public class BoardController extends HttpServlet {
 
 			BoardVo bVo = bDao.getBoard(no);
 			bDao.hitup(no);
-			
+
 			request.setAttribute("bVo", bVo);
 
 			WebUtil.forward(request, response, "/WEB-INF/views/board/read.jsp");
 		} else if ("mform".equals(action)) {
-			
+
 			int no = Integer.parseInt(request.getParameter("no"));
-			
-			BoardDao bDao =new BoardDao();
+
+			BoardDao bDao = new BoardDao();
 			BoardVo bVo = bDao.getBoard(no);
-			
+
 			request.setAttribute("mVo", bVo);
-			
+
 			WebUtil.forward(request, response, "/WEB-INF/views/board/modifyForm.jsp");
 		}
 
@@ -67,37 +67,48 @@ public class BoardController extends HttpServlet {
 			int no = Integer.parseInt(request.getParameter("no"));
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			
+
 			BoardDao bDao = new BoardDao();
-			BoardVo bVo = new BoardVo(title,content,no);
-			
+			BoardVo bVo = new BoardVo(title, content, no);
+
 			bDao.boardUpdate(bVo);
-			
+
 			WebUtil.redirect(request, response, "/mysite/board");
-			
+
 		}
-		
+
 		else if ("wform".equals(action)) {
-			
+
 			WebUtil.forward(request, response, "/WEB-INF/views/board/writeForm.jsp");
 		}
-		
+
 		else if ("insert".equals(action)) {
-			
+
 			HttpSession session = request.getSession();
-			
-			int no = ((UserVo)session.getAttribute("authUser")).getNo();
+
+			int no = ((UserVo) session.getAttribute("authUser")).getNo();
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			
+
 			BoardVo bVo = new BoardVo(title, no, content);
 			BoardDao bDao = new BoardDao();
-			
+
 			bDao.boardInsert(bVo);
-			
+
 			WebUtil.redirect(request, response, "/mysite/board");
 		}
-		
+
+		else if ("delete".equals(action)) {
+
+			int no = Integer.parseInt(request.getParameter("no"));
+			//System.out.println(no);
+			BoardDao bDao = new BoardDao();
+
+			bDao.boardDelete(no);
+
+			WebUtil.redirect(request, response, "/mysite/board?action=list");
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
